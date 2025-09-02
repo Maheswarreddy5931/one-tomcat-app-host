@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MakeUp Bliss — Beauty & Cosmetics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f0f12;
+      --card:#15151b;
+      --soft:#1c1c24;
+      --muted:#9aa3b2;
+      --txt:#f6f7fb;
+      --acc:#ff4db8;
+      --acc-2:#7c5cff;
+      --grad: linear-gradient(135deg,var(--acc),var(--acc-2));
+      --radius: 22px;
+      --shadow: 0 20px 40px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; background: radial-gradient(1200px 800px at 80% -10%, #2a1c34, transparent 40%),
+      radial-gradient(900px 600px at -10% 10%, #1b1f3a, transparent 45%), var(--bg);
+      color:var(--txt); font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    }
+    a{color:inherit; text-decoration:none}
+    img{max-width:100%; display:block}
+    .container{max-width:1200px; margin:0 auto; padding:0 20px}
+    /* NAV */
+    nav{position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(8px); background:rgba(15,15,18,.6); border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav-wrap{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.5px}
+    .brand .logo{width:36px; height:36px; border-radius:12px; background:var(--grad); box-shadow:0 10px 30px rgba(255,77,184,.35)}
+    .nav-links{display:flex; gap:22px; align-items:center}
+    .btn{display:inline-flex; align-items:center; gap:10px; padding:12px 18px; border-radius:14px; border:1px solid rgba(255,255,255,.1); background:var(--soft); color:#fff; font-weight:600; transition:.25s transform, .25s box-shadow}
+    .btn:hover{transform:translateY(-2px); box-shadow: var(--shadow)}
+    .btn-primary{background:var(--grad); border:0}
+
+    /* HERO */
+    .hero{display:grid; grid-template-columns:1.1fr .9fr; gap:34px; align-items:center; padding:64px 0}
+    .hero h1{font-size:clamp(32px,6vw,56px); line-height:1.05; margin:.2em 0 .4em}
+    .hero p{color:var(--muted); font-size:18px}
+    .hero .cta{display:flex; gap:14px; margin-top:22px; flex-wrap:wrap}
+    .badge{display:inline-flex; align-items:center; gap:10px; padding:8px 12px; border-radius:999px; background:rgba(255,255,255,.06); color:#fff; border:1px solid rgba(255,255,255,.08)}
+    .hero-card{position:relative; border-radius:var(--radius); overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.06)}
+    .hero-card .glow{position:absolute; inset:0; background:radial-gradient(400px 260px at 80% 10%, rgba(255,77,184,.35), transparent 40%);
+      pointer-events:none}
+    .hero-img{aspect-ratio:4/5; object-fit:cover}
+    .ribbon{position:absolute; top:16px; left:16px; background:var(--grad); padding:8px 12px; border-radius:999px; font-weight:700; font-size:12px}
+
+    /* PRODUCTS */
+    .section{padding:56px 0}
+    .section h2{font-size:clamp(24px,3.8vw,40px); margin:0 0 8px}
+    .section p.lead{color:var(--muted); margin:0 0 24px}
+    .grid{display:grid; gap:18px}
+    .grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    @media(max-width:920px){.hero{grid-template-columns:1fr}.grid.cols-3{grid-template-columns:1fr 1fr}}
+    @media(max-width:640px){.grid.cols-3{grid-template-columns:1fr}}
+    .card{background:var(--card); border:1px solid rgba(255,255,255,.06); border-radius:24px; overflow:hidden; position:relative; transition:.3s transform, .3s box-shadow}
+    .card:hover{transform:translateY(-6px); box-shadow:var(--shadow)}
+    .card .thumb{aspect-ratio:4/3; object-fit:cover}
+    .card .pad{padding:18px}
+    .price{font-weight:700; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent}
+    .pill{position:absolute; top:12px; right:12px; padding:6px 10px; font-size:11px; font-weight:700; background:rgba(0,0,0,.45); border:1px solid rgba(255,255,255,.12); border-radius:999px}
+
+    /* CAROUSEL */
+    .carousel{position:relative; border-radius:var(--radius); overflow:hidden; border:1px solid rgba(255,255,255,.06)}
+    .slides{display:flex; transform:translateX(0); transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+    .slide{min-width:100%; aspect-ratio:16/7; background:#111; display:grid; place-items:center}
+    .carousel .control{position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,.5); border:1px solid rgba(255,255,255,.18); width:44px; height:44px; border-radius:50%; display:grid; place-items:center; cursor:pointer; user-select:none}
+    .carousel .prev{left:12px} .carousel .next{right:12px}
+
+    /* BEFORE/AFTER */
+    .ba{position:relative; border-radius:var(--radius); overflow:hidden; border:1px solid rgba(255,255,255,.06)}
+    .ba img{display:block; width:100%; height:auto}
+    .ba .after{position:absolute; inset:0; overflow:hidden}
+    .ba .after img{width:200%; height:auto}
+    .ba .handle{position:absolute; top:0; bottom:0; width:2px; background:#fff; left:50%; transform:translateX(-1px)}
+    .ba .dot{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:26px; height:26px; border-radius:50%; background:var(--grad); box-shadow:0 6px 18px rgba(0,0,0,.35)}
+
+    /* NEWSLETTER */
+    .newsletter{display:flex; gap:12px; flex-wrap:wrap}
+    .input{flex:1; min-width:220px; padding:14px 16px; background:#101015; border:1px solid rgba(255,255,255,.08); border-radius:14px; color:var(--txt)}
+
+    /* FOOTER */
+    footer{border-top:1px solid rgba(255,255,255,.08); padding:28px 0; color:var(--muted)}
+    .links{display:flex; gap:16px; flex-wrap:wrap}
+
+    /* UTIL */
+    .tag{font-size:12px; text-transform:uppercase; letter-spacing:.15em; color:var(--muted)}
+    .sep{height:1px; background:rgba(255,255,255,.06); margin:28px 0}
+    .floaty{filter: drop-shadow(0 12px 24px rgba(255,77,184,.25))}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container nav-wrap">
+      <a class="brand" href="#">
+        <span class="logo"></span>
+        <span>MakeUp Bliss</span>
+      </a>
+      <div class="nav-links">
+        <a href="#products">Products</a>
+        <a href="#looks">Looks</a>
+        <a href="#about">About</a>
+        <a class="btn btn-primary" href="#newsletter">Shop New Arrivals</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="container hero">
+    <div>
+      <span class="badge">💄 New: Velvet Matte Collection</span>
+      <h1>Beauty that <span style="background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent">glows</span> with you</h1>
+      <p>Clean, cruelty‑free cosmetics crafted to match every skin tone. Weightless textures, long‑lasting finishes, and pigments that pop.</p>
+      <div class="cta">
+        <a class="btn btn-primary">Explore Shades</a>
+        <a class="btn">View Tutorials</a>
+      </div>
+      <div class="sep"></div>
+      <div class="tag">Free shipping over ₹999 · 30‑day returns</div>
+    </div>
+    <div class="hero-card">
+      <!-- Replace the image URLs below with product/hero images you have rights to use. -->
+      <span class="ribbon">Editor’s Pick</span>
+      <img class="hero-img" alt="Makeup hero" src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&w=1400&auto=format&fit=crop"/>
+      <span class="glow" aria-hidden="true"></span>
+    </div>
+  </header>
+
+  <section id="products" class="section container">
+    <h2>Best Sellers</h2>
+    <p class="lead">Our community’s most‑loved formulas, now in new shades.</p>
+    <div class="grid cols-3">
+      <article class="card">
+        <span class="pill">-15%</span>
+        <img class="thumb" alt="Velvet lipstick" src="https://images.unsplash.com/photo-1585238342023-78ad2b274e02?q=80&w=1200&auto=format&fit=crop"/>
+        <div class="pad">
+          <h3>Velvet Matte Lipstick</h3>
+          <p class="lead">Cushiony feel, blur‑soft finish.</p>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:10px">
+            <span class="price">₹699</span>
+            <button class="btn add" data-name="Velvet Matte Lipstick">Add to Cart</button>
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <img class="thumb" alt="Eyeshadow palette" src="https://images.unsplash.com/photo-1504707748692-419802cf939d?q=80&w=1200&auto=format&fit=crop"/>
+        <div class="pad">
+          <h3>Prism Eyeshadow Palette</h3>
+          <p class="lead">12 ultra‑blendable shades.</p>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:10px">
+            <span class="price">₹1,299</span>
+            <button class="btn add" data-name="Prism Eyeshadow Palette">Add to Cart</button>
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <img class="thumb" alt="Highlighter" src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1200&auto=format&fit=crop"/>
+        <div class="pad">
+          <h3>Glass Glow Highlighter</h3>
+          <p class="lead">Dewy glass‑skin effect.</p>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:10px">
+            <span class="price">₹899</span>
+            <button class="btn add" data-name="Glass Glow Highlighter">Add to Cart</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="looks" class="section container">
+    <div class="carousel" aria-label="Featured looks">
+      <div class="slides" id="slides">
+        <div class="slide"><img alt="Glam look" src="https://images.unsplash.com/photo-1619983081563-430f63602796?q=80&w=1600&auto=format&fit=crop"></div>
+        <div class="slide"><img alt="Natural look" src="https://images.unsplash.com/photo-1616394584738-1f153b7e40c5?q=80&w=1600&auto=format&fit=crop"></div>
+        <div class="slide"><img alt="Runway look" src="https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=1600&auto=format&fit=crop"></div>
+      </div>
+      <button class="control prev" id="prev" aria-label="Previous">‹</button>
+      <button class="control next" id="next" aria-label="Next">›</button>
+    </div>
+  </section>
+
+  <section class="section container">
+    <h2>Before / After</h2>
+    <p class="lead">Slide to compare the transformation.</p>
+    <div class="ba" id="ba">
+      <img alt="Before" src="https://images.unsplash.com/photo-1512202276630-8f76853a86e8?q=80&w=1600&auto=format&fit=crop"/>
+      <div class="after"><img alt="After" src="https://images.unsplash.com/photo-1556227832-1f3c3f1a25b6?q=80&w=1800&auto=format&fit=crop"/></div>
+      <div class="handle"></div>
+      <div class="dot" title="Drag"></div>
+    </div>
+  </section>
+
+  <section id="about" class="section container">
+    <div class="grid" style="grid-template-columns:1.2fr .8fr; gap:24px">
+      <div>
+        <h2>Clean, conscious beauty</h2>
+        <p class="lead">We formulate without parabens, mineral oils, or micro‑plastics. All products are vegan and never tested on animals.</p>
+        <ul style="line-height:2; color:var(--muted); padding-left:18px">
+          <li>Dermatologist tested</li>
+          <li>Made for Indian climate & tones</li>
+          <li>Eco‑friendly packaging</li>
+        </ul>
+      </div>
+      <div class="card floaty">
+        <img class="thumb" alt="Lab shot" src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop"/>
+      </div>
+    </div>
+  </section>
+
+  <section id="newsletter" class="section container">
+    <h2>Join our glow club ✨</h2>
+    <p class="lead">Get 10% off your first order and early access to drops.</p>
+    <form class="newsletter" onsubmit="event.preventDefault(); fakeSubscribe();">
+      <input class="input" type="email" required placeholder="Enter your email"/>
+      <button class="btn btn-primary" type="submit">Subscribe</button>
+    </form>
+    <p id="subMsg" class="lead" style="display:none; margin-top:10px">Thanks! Please check your inbox. 💌</p>
+  </section>
+
+  <footer>
+    <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap">
+      <div>© <span id="year"></span> MakeUp Bliss</div>
+      <div class="links">
+        <a href="#">Privacy</a>
+        <a href="#">Returns</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Simple cart toast
+    document.querySelectorAll('.add').forEach(btn => btn.addEventListener('click', () => {
+      const name = btn.dataset.name || 'Item';
+      const toast = document.createElement('div');
+      toast.textContent = `${name} added to cart`;
+      Object.assign(toast.style, {
+        position:'fixed', bottom:'22px', right:'22px', padding:'12px 16px', borderRadius:'12px',
+        background:'rgba(0,0,0,.75)', color:'#fff', zIndex:9999, boxShadow:'0 8px 24px rgba(0,0,0,.4)'
+      });
+      document.body.appendChild(toast);
+      setTimeout(()=> toast.remove(), 1800);
+    }));
+
+    // Carousel
+    const slides = document.getElementById('slides');
+    const total = slides.children.length; let idx = 0;
+    function go(n){ idx = (n + total) % total; slides.style.transform = `translateX(-${idx*100}%)`; }
+    document.getElementById('prev').onclick = ()=>go(idx-1);
+    document.getElementById('next').onclick = ()=>go(idx+1);
+    setInterval(()=>go(idx+1), 5000);
+
+    // Before/After slider
+    const ba = document.getElementById('ba');
+    const after = ba.querySelector('.after');
+    const handle = ba.querySelector('.handle');
+    function setClip(px){
+      const rect = ba.getBoundingClientRect();
+      const x = Math.max(0, Math.min(px - rect.left, rect.width));
+      after.style.clipPath = `inset(0 ${rect.width - x}px 0 0)`;
+      handle.style.left = `${(x/rect.width)*100}%`;
+      ba.querySelector('.dot').style.left = handle.style.left;
+    }
+    setClip(ba.getBoundingClientRect().left + ba.getBoundingClientRect().width/2);
+    let dragging = false;
+    ba.addEventListener('mousedown', e=>{dragging=true; setClip(e.clientX)});
+    window.addEventListener('mousemove', e=> dragging && setClip(e.clientX));
+    window.addEventListener('mouseup', ()=> dragging=false);
+    ba.addEventListener('touchstart', e=> setClip(e.touches[0].clientX), {passive:true});
+    ba.addEventListener('touchmove', e=> setClip(e.touches[0].clientX), {passive:true});
+
+    // Newsletter fake subscribe
+    function fakeSubscribe(){
+      document.getElementById('subMsg').style.display = 'block';
+    }
+    window.fakeSubscribe = fakeSubscribe;
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
